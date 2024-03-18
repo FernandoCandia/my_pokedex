@@ -49,10 +49,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
     setShowDetail(false);
   };
 
+  var urlImagen = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/" + pokemon.id.toString().padStart(3, '0') + ".png";
+
   return (
     <div className="p-4 bg-gray-100 border border-gray-200 rounded-lg shadow-md dark:bg-gray-300 dark:border-gray-700" onClick={openDetail}>
       <img
-        src={pokemon.sprites.front_default}
+        src={urlImagen}
         alt={pokemon.name}
         className="w-full h-full object-cover"
         style={{ width: '100%', maxHeight: '70%' }}
