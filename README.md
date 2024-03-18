@@ -1,6 +1,6 @@
-# Pokedex using Typescript + Tailwind
+# Pokedex
 
-Pokedex frontend created using API https://pokeapi.co/.
+Pokedex frontend created using Typescript + Tailwind and API https://pokeapi.co/.
 
 ## Dependencies
 
