@@ -13,19 +13,17 @@ const Home: React.FC = () => {
     const { data } = await axios.get<{ results: Pokemon[] }>(
       `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=12`
     );
+  
     const pokemons = await Promise.all(
       data.results.map(async (pokemon) => {
-        const { data: pokemonData } = await axios.get<{
-          id: number;
-          sprites: { front_default: string };
-          types: { type: { name: string } }[];
-          abilities: { ability: { name: string }}
-        }>(pokemon.url);
+        const { data: pokemonData } = await axios.get<Pokemon>(pokemon.url);
+        const id = pokemonData.id;
+        const imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${id.toString().padStart(3, '0')}.png`;
         return {
+          id: id,
           name: pokemon.name,
-          id: pokemonData.id,
           url: pokemon.url,
-          sprites: pokemonData.sprites,
+          image_url: imageUrl,
           types: pokemonData.types,
           abilities: pokemonData.abilities,
         };
@@ -33,6 +31,7 @@ const Home: React.FC = () => {
     );
     return pokemons;
   };
+  
 
   const { data, isLoading, isError } = useQuery(['pokemons', offset], () => fetchPokemons(offset), {
     refetchOnWindowFocus: false,
@@ -60,8 +59,8 @@ const Home: React.FC = () => {
           <PokemonCard key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>
-      <div className="flex justify-center">
-        <button onClick={handleLoadMore} className="mt-4 p-2 bg-blue-500 text-white rounded">
+      <div className="pt-6 flex justify-center">
+        <button onClick={handleLoadMore} className="bg-sky-500 hover:bg-sky-700 px-5 py-2 text-sm leading-5 rounded-md font-semibold text-white">
           Cargar más Pokémon
         </button>
       </div>

@@ -2,9 +2,7 @@ export interface Pokemon {
     id: number;
     name: string;
     url: string;
-    sprites: {
-      front_default: string;
-    };
+    image_url: string
     types: {
       type: {
         name: string
